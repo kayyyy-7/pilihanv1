@@ -1,0 +1,564 @@
+<html>
+<head>
+    <title>WARMAS STORE - FULL FEATURE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
+    
+    /* COLOR VARIABLES - PROFESSIONAL PALETTE */
+    :root {
+        --primary-bg: #F5F2F2;
+        --accent-gold: #FEB05D;
+        --primary-blue: #5A7ACD;
+        --dark-text: #2B2A2A;
+        --white: #FFFFFF;
+    }
+    
+    body { 
+        font-family: 'Plus Jakarta Sans', sans-serif; 
+        background-color: var(--primary-bg); 
+        color: var(--dark-text); 
+    }
+    
+    .active-tab { 
+        color: var(--primary-blue); 
+        border-bottom: 3px solid var(--primary-blue); 
+    }
+    .variant-btn.active { 
+        border-color: var(--primary-blue); 
+        background-color: var(--white); 
+        color: var(--primary-blue); 
+    }
+    
+    #modal-detail, #modal-direct { 
+        background: rgba(245, 242, 242, 0.95); 
+        backdrop-filter: blur(8px); 
+    }
+    
+    .img-container { 
+        width: 100%; 
+        aspect-ratio: 4 / 3; 
+        overflow: hidden; 
+        border-radius: 0.75rem; 
+    }
+    .img-container img { 
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover; 
+    }
+
+    .video-banner {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.7;
+    }
+
+    /* PROFESSIONAL FOOTER STYLES */
+    .footer-section {
+        background: linear-gradient(135deg, var(--dark-text) 0%, #1e1e1e 100%);
+        color: var(--white);
+        border-top: 1px solid #444;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .footer-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--accent-gold), var(--primary-blue), transparent);
+    }
+    
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 1rem 2rem;
+    }
+    
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 2fr;
+        gap: 3rem;
+        margin-bottom: 3rem;
+    }
+    
+    .footer-logo {
+        font-size: 2rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--accent-gold), var(--primary-blue));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+    }
+    
+    .footer-desc {
+        color: #d1d1d1;
+        line-height: 1.7;
+        font-size: 0.95rem;
+    }
+    
+    .footer-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--white);
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+    
+    .footer-title::after {
+        content: '';
+        position: absolute;
+        bottom: -0.5rem;
+        left: 0;
+        width: 2.5rem;
+        height: 2px;
+        background: linear-gradient(90deg, var(--accent-gold), var(--primary-blue));
+    }
+    
+    .footer-link {
+        display: block;
+        color: #d1d1d1;
+        text-decoration: none;
+        margin-bottom: 0.75rem;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+    
+    .footer-link:hover {
+        color: var(--accent-gold);
+        transform: translateX(8px);
+    }
+    
+    .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .social-link {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        transition: all 0.3s ease;
+        font-size: 1.1rem;
+        border: 2px solid transparent;
+    }
+    
+    .social-link:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 10px 25px rgba(254, 176, 93, 0.4);
+        border-color: var(--accent-gold);
+    }
+    
+    .whatsapp { background: #25D366; }
+    .instagram { background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); }
+    .tiktok { background: linear-gradient(45deg, #000000, #ff0050); }
+    
+    .footer-bottom {
+        border-top: 1px solid #444;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        text-align: center;
+        color: #b8b8b8;
+        font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+        .footer-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            text-align: center;
+        }
+        
+        .social-links {
+            justify-content: center;
+        }
+    }
+</style>
+
+</head>
+<body class="pb-24">
+<nav class="p-4 shadow-lg sticky top-0 z-50 border-b" style="background-color: var(--white); border-color: #e5e6e7;">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <img src="g1.png" alt="Mainfy Store Logo" class="w-10 h-10 object-contain rounded-lg shadow-sm">
+            <h1 class="text-xl font-extrabold italic uppercase tracking-tighter">
+                <span style="color: var(--accent-gold);">MAINFY</span> 
+                <span style="color: var(--primary-blue);">STORE</span>
+            </h1>
+        </div>
+
+        <div class="flex items-center gap-5">
+            <i class="fas fa-search cursor-pointer text-lg" style="color: var(--dark-text);" onclick="toggleSearch()"></i>
+            <div class="relative cursor-pointer" onclick="openCart()">
+                <i class="fas fa-shopping-cart text-lg" style="color: var(--dark-text);"></i>
+                <span id="cart-count" class="absolute -top-2 -right-2 text-[10px] rounded-full px-1.5 font-bold" style="background-color: var(--accent-gold); color: var(--dark-text);">0</span>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div id="search-bar" class="hidden p-4 border-b sticky top-[61px] z-40 shadow-lg" style="background-color: var(--white); border-color: #e5e6e7;">
+    <div class="max-w-xl mx-auto">
+        <input type="text" id="input-search" oninput="liveSearch(this.value)" placeholder="Cari barang..." class="w-full p-3 border rounded-xl outline-none font-bold text-sm transition-all duration-300" style="background-color: var(--primary-bg); border-color: #d1d5db;">
+    </div>
+</div>
+
+<main class="max-w-6xl mx-auto p-4">
+    
+    <div id="view-home" class="block">
+        <div class="relative w-full h-44 md:h-64 rounded-[2rem] overflow-hidden mb-8 shadow-2xl" style="background: linear-gradient(135deg, var(--dark-text), #3a3a3a);">
+            <video autoplay muted loop playsinline class="video-banner">
+                <source src="VID2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="absolute inset-0 flex flex-col justify-center px-8">
+                <h2 class="text-4xl md:text-6xl font-extrabold italic uppercase leading-none drop-shadow-2xl" style="background: linear-gradient(135deg, var(--accent-gold), var(--white)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">STREET<br>CULTURE</h2>
+            </div>
+        </div>
+
+        <h2 class="text-xs font-bold border-l-4 pl-2 uppercase mb-4 italic" style="border-color: var(--primary-blue);">PALING LARIS</h2>
+        <div id="editor-pick-container" class="mb-10"></div>
+
+        <h2 class="text-xs font-bold border-l-4 pl-2 uppercase mb-4 italic" style="border-color: var(--accent-gold);">Rekomendasi</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="home-products"></div>
+    </div>
+
+    <div id="view-toko" class="hidden">
+        <h2 class="text-xs font-bold border-l-4 pl-2 mb-6 uppercase italic" style="border-color: var(--primary-blue);">Katalog Lengkap</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="toko-products"></div>
+    </div>
+</main>
+
+<!-- MODALS -->
+<div id="modal-detail" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4" onclick="closeDetail()">
+    <div class="w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl relative md:flex" style="background-color: var(--white);" onclick="event.stopPropagation()">
+        <button onclick="closeDetail()" class="absolute top-5 right-5 z-50 w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg shadow-lg transition-all hover:scale-110" style="background-color: var(--primary-bg); color: var(--dark-text);">✕</button>
+        <div class="md:w-1/2" style="background-color: var(--primary-bg);">
+            <img id="modal-img" src="" class="w-full h-72 md:h-full object-cover">
+        </div>
+        <div class="p-8 md:p-12 md:w-1/2 flex flex-col justify-center">
+            <h3 id="modal-name" class="text-2xl font-extrabold uppercase italic mb-2 tracking-tighter" style="color: var(--dark-text);"></h3>
+            <p id="modal-price" class="font-bold text-2xl mb-8" style="color: var(--accent-gold);"></p>
+            <div class="space-y-6 mb-8 border-t pt-6" style="border-color: #e5e6e7;">
+                <div>
+                    <p class="text-[10px] font-bold uppercase mb-3" style="color: #6b7280;">Ukuran</p>
+                    <div class="flex gap-2">
+                        <button class="variant-btn border-2 px-5 py-2 rounded-xl text-xs font-bold active transition-all hover:shadow-md" onclick="selectSize(this)">M</button>
+                        <button class="variant-btn border-2 px-5 py-2 rounded-xl text-xs font-bold transition-all hover:shadow-md" onclick="selectSize(this)">L</button>
+                        <button class="variant-btn border-2 px-5 py-2 rounded-xl text-xs font-bold transition-all hover:shadow-md" onclick="selectSize(this)">XL</button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="actionAddToCart()" class="flex-1 border-2 py-4 rounded-2xl font-bold text-[10px] uppercase hover:shadow-lg transition-all" style="border-color: var(--dark-text); color: var(--dark-text);">Tambah Keranjang</button>
+                <button onclick="openDirectOrder()" class="flex-1 py-4 rounded-2xl font-bold text-[10px] uppercase hover:shadow-xl transition-all" style="background: linear-gradient(135deg, var(--primary-blue), #4b68d0); color: var(--white);">Beli Sekarang</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-direct" class="fixed inset-0 z-[120] hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-md rounded-3xl p-8 shadow-2xl relative" style="background-color: var(--white);">
+        <button onclick="closeDirect()" class="absolute top-5 right-5 font-bold text-xl hover:scale-110 transition-all" style="color: var(--dark-text);">✕</button>
+        <h3 class="text-lg font-extrabold uppercase mb-6 italic underline" style="color: var(--primary-blue);">Checkout Kilat</h3>
+        <div class="space-y-4 mb-6">
+            <input type="text" id="dir-name" placeholder="Nama" class="w-full p-4 rounded-xl text-xs font-bold outline-none border-2 border-transparent focus:border-blue-500 transition-all" style="background-color: var(--primary-bg);">
+            <textarea id="dir-addr" placeholder="Alamat" class="w-full p-4 rounded-xl text-xs h-20 font-bold outline-none transition-all" style="background-color: var(--primary-bg);"></textarea>
+            <div class="flex gap-2">
+                <input type="text" id="dir-promo" placeholder="KODE PROMO" class="flex-1 p-4 border-2 border-dashed rounded-xl text-xs font-bold outline-none uppercase transition-all" style="border-color: #f3e8e8; color: var(--accent-gold);">
+                <button onclick="applyPromo('direct')" class="px-6 rounded-xl text-xs font-bold hover:shadow-md transition-all" style="background-color: var(--dark-text); color: var(--white);">CEK</button>
+            </div>
+        </div>
+        <div class="flex justify-between items-center mb-6">
+            <span id="dir-total-display" class="text-2xl font-extrabold w-full text-center" style="color: var(--accent-gold);"></span>
+        </div>
+        <button onclick="sendDirectWA()" class="w-full py-5 rounded-2xl font-bold uppercase text-xs hover:shadow-xl transition-all" style="background: linear-gradient(135deg, #25D366, #20b155); color: var(--white);">Pesan via WA</button>
+    </div>
+</div>
+
+<div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full sm:w-[400px] shadow-2xl z-[110] transform translate-x-full transition-transform duration-300 flex flex-col" style="background-color: var(--white);">
+    <div class="p-6 border-b flex justify-between items-center" style="background-color: var(--primary-bg); border-color: #e5e6e7;">
+        <h2 class="font-bold uppercase text-xs tracking-widest" style="color: var(--dark-text);">Keranjang Belanja</h2>
+        <button onclick="closeCart()" class="text-xl hover:scale-110 transition-all" style="color: var(--dark-text);">✕</button>
+    </div>
+    <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+    <div class="p-6 border-t shadow-[0_-10px_20px_rgba(0,0,0,0.05)]" style="background-color: var(--white); border-color: #e5e6e7;">
+        <div class="space-y-3 mb-6">
+            <input type="text" id="cart-buyer-name" placeholder="Nama Penerima" class="w-full p-3 rounded-xl text-xs font-bold border outline-none transition-all" style="background-color: var(--primary-bg);">
+            <textarea id="cart-buyer-address" placeholder="Alamat Lengkap" class="w-full p-3 rounded-xl text-xs h-16 font-bold border outline-none transition-all" style="background-color: var(--primary-bg);"></textarea>
+            <div class="flex gap-2">
+                <input type="text" id="cart-promo" placeholder="PROMO" class="flex-1 p-3 border-2 border-dashed rounded-xl text-xs font-bold uppercase outline-none transition-all" style="border-color: #f3e8e8; color: var(--accent-gold);">
+                <button onclick="applyPromo('cart')" class="px-5 rounded-xl text-xs font-bold hover:shadow-md transition-all" style="background-color: var(--dark-text); color: var(--white);">CEK</button>
+            </div>
+        </div>
+        <div class="flex justify-between font-extrabold text-2xl mb-6" style="color: var(--accent-gold);">
+            <span class="text-xs uppercase self-center" style="color: #6b7280;">Total:</span> <span id="cart-total-final">Rp 0</span>
+        </div>
+        <button onclick="sendCartWA()" class="w-full py-5 rounded-2xl font-bold uppercase text-xs hover:shadow-xl transition-all" style="background: linear-gradient(135deg, #25D366, #20b155); color: var(--white);">Checkout WA Sekarang</button>
+    </div>
+</div>
+
+<!-- BOTTOM NAVIGATION -->
+<div class="fixed bottom-0 w-full border-t flex justify-around p-4 z-50" style="background-color: rgba(245, 242, 242, 0.98); backdrop-filter: blur(12px); border-color: #e5e6e7;">
+    <button onclick="changeTab('home')" id="nav-home" class="flex flex-col items-center active-tab w-1/4 text-[10px] font-bold uppercase transition-all hover:scale-105">
+        <i class="fas fa-home mb-1 text-lg"></i>Home
+    </button>
+    <button onclick="changeTab('toko')" id="nav-toko" class="flex flex-col items-center w-1/4 text-[10px] font-bold uppercase transition-all hover:scale-105" style="color: var(--dark-text);">
+        <i class="fas fa-store mb-1 text-lg"></i>Toko
+    </button>
+    <a href="https://wa.me/62881011909323" class="w-1/4 flex flex-col items-center text-[10px] font-bold uppercase transition-all hover:scale-105" style="color: #25D366;">
+        <i class="fab fa-whatsapp mb-1 text-lg"></i>Admin
+    </a>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer-section">
+    <div class="footer-content">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo">MAINFY STORE</div>
+                <p class="footer-desc">
+                    Kami menghadirkan produk olahraga inovatif untuk mendukung performa dan gaya hidup aktif, sekaligus mendorong kreativitas dan dampak positif.
+                </p>
+                <div class="social-links">
+                    <a href="https://wa.me/62881011909323" class="social-link whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="https://instagram.com/mainfystore" class="social-link instagram" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@rglrmdhn?_r=1&_t=ZS-966JBxqAywx" class="social-link tiktok" target="_blank">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="footer-title">Services</h3>
+                <a href="#" class="footer-link"><i class="fas fa-chevron-right mr-2"></i>Free Shipping</a>
+                <a href="#" class="footer-link"><i class="fas fa-chevron-right mr-2"></i>24/7 Support</a>
+                <a href="#" class="footer-link"><i class="fas fa-chevron-right mr-2"></i>Promo Aktif</a>
+            </div>
+            
+            <div>
+                <h3 class="footer-title">Contact Info</h3>
+                <a href="https://wa.me/62881011909323" class="footer-link">
+                    <i class="fab fa-whatsapp mr-2" style="color: #25D366;"></i>0810-1190-9323
+                </a>
+                <a href="https://www.instagram.com/agungzaky07?igsh=MWdhYnVjcm9sd2Zxbg==" class="footer-link">
+                    <i class="fab fa-instagram mr-2"></i>agungzaky07
+                </a>
+                <a href="https://www.tiktok.com/@rglrmdhn?_r=1&_t=ZS-966JBxqAywx" class="footer-link">
+                    <i class="fab fa-tiktok mr-2"></i>rglrmdhn
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 <strong>MAINFY STORE</strong> 
+                <br>By: AI x Mainfy.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // JAVASCRIPT CODE REMAINS THE SAME - NO CHANGES NEEDED
+    const products = [
+        { id: 1, name: "Half-Zip Longgar Varsity", price: 1170000, img: "AD1.jpeg" },
+        { id: 2, name: "Celana Olahraga Brushed Woven", price: 1130000, img: "AD2.jpeg" },
+        { id: 3, name: "Kaus Polo Allover Print Core", price: 940000, img: "AD3.jpeg" },
+        { id: 4, name: "Track Top Real Madrid Terrace Icons", price: 1280000, img: "AD4.jpeg" },
+        { id: 5, name: "Jaket Core Provisional Full-Zip", price: 1710000, img: "AD5.jpeg" },
+        { id: 6, name: "Track Pants Wabash", price: 1120000, img: "AD6.jpeg" },
+        { id: 7, name: "Jersey Away Juventus 24/25", price: 1200000, img: "AD7.jpeg" },
+        { id: 8, name: "Celana Panjang Cargo Print Terrex Xploric", price: 1530000, img: "AD8.jpeg" },
+        { id: 9, name: "FIREBIRD TP", price: 1800000, img: "AD9.jpeg" },
+        { id: 10, name: "Pullover Top Cutline", price: 1040000, img: "AD10.jpeg" },
+        { id: 11, name: "Sepatu Samba OG", price: 2000000, img: "AD11.jpeg" },
+        { id: 12, name: "Sepatu SL 72 RS", price: 1800000, img: "AD12.jpeg" },
+        { id: 13, name: "Track Top Away Argentina 2006", price: 1600000, img: "AD13.jpeg" },
+        { id: 14, name: "TRACK JACKET FIREBIRD ADIDAS ORIGINALS & ALL BLACKS PLAID WOVEN", price: 2100000, img: "AD14.jpeg" },
+        { id: 15, name: "TRACK TOP TENUN SANTIAGO", price: 2000000, img: "AD15.jpeg" },
+        { id: 16, name: "Sweatshirt Bersepeda Arsip", price: 1980000, img: "AD16.jpeg" },
+        { id: 17, name: "Sepatu ANTHONY EDWARDS 2", price: 2000000, img: "AD17.jpeg" },
+        { id: 18, name: "Legging 7/8 Optime Rib", price: 760000, img: "AD18.jpeg" },
+        { id: 19, name: "TEE LNY", price: 1000000, img: "AD19.jpeg" },
+        { id: 20, name: "T-Shirt Lengan Panjang Wilshire", price: 1200000, img: "AD20.jpeg" }
+    ];
+
+    const promos = { "HEMAT10": 0.4, "DISKON50": 0.5, "BAGIPROMO": 0.2, "ADIDASMURAH": 0.15, "PROMOINDONG": 0.25 };
+    
+    let cart = JSON.parse(localStorage.getItem('mainfy_cart')) || [];
+    let selectedProd = null;
+    let selSize = "M";
+    let activeDiscount = 0;
+
+    function render() {
+        document.getElementById('home-products').innerHTML = products.slice(0, 8).map(p => productCard(p)).join('');
+        document.getElementById('toko-products').innerHTML = products.map(p => productCard(p)).join('');
+        const ep = products[3];
+        document.getElementById('editor-pick-container').innerHTML = `
+            <div class="relative w-full h-44 rounded-3xl overflow-hidden cursor-pointer shadow-xl" style="background: linear-gradient(135deg, var(--dark-text), #3a3a3a);" onclick="openDetail(${ep.id})">
+                <img src="${ep.img}" class="w-full h-full object-cover opacity-60">
+                <div class="absolute inset-0 p-6 flex flex-col justify-end" style="color: var(--white);">
+                    <h4 class="font-extrabold text-xl italic uppercase">${ep.name}</h4>
+                </div>
+            </div>`;
+        updateCart();
+    }
+
+    function productCard(p) {
+        return `<div class="p-3 rounded-2xl border shadow-sm cursor-pointer hover:shadow-xl transition-all duration-300" style="background-color: var(--white); border-color: #e5e6e7;" onclick="openDetail(${p.id})">
+            <div class="img-container"><img src="${p.img}" loading="lazy"></div>
+            <div class="pt-3">
+                <h3 class="text-[9px] font-bold uppercase italic truncate mb-1" style="color: var(--dark-text);">${p.name}</h3>
+                <p class="font-extrabold text-xs" style="color: var(--accent-gold);">Rp ${p.price.toLocaleString('id-ID')}</p>
+            </div>
+        </div>`;
+    }
+
+    function openDetail(id) {
+        selectedProd = products.find(p => p.id === id);
+        document.getElementById('modal-name').innerText = selectedProd.name;
+        document.getElementById('modal-price').innerText = `Rp ${selectedProd.price.toLocaleString('id-ID')}`;
+        document.getElementById('modal-img').src = selectedProd.img;
+        document.getElementById('modal-detail').classList.remove('hidden');
+    }
+
+    function liveSearch(q) {
+        changeTab('toko'); 
+        const filtered = products.filter(p => p.name.toLowerCase().includes(q.toLowerCase()));
+        document.getElementById('toko-products').innerHTML = filtered.length > 0 
+            ? filtered.map(p => productCard(p)).join('') 
+            : `<p class="col-span-2 text-center py-10 text-gray-400" style="color: #9ca3af;">Barang tidak ditemukan</p>`;
+    }
+
+    function actionAddToCart() {
+        const existing = cart.find(i => i.id === selectedProd.id && i.size === selSize);
+        if(existing) {
+            existing.qty++; 
+        } else {
+            cart.push({ ...selectedProd, size: selSize, qty: 1 });
+        }
+        updateCart(); 
+        closeDetail(); 
+        openCart();
+    }
+
+    function updateCart() {
+        let total = 0;
+        const itemsContainer = document.getElementById('cart-items');
+        
+        itemsContainer.innerHTML = cart.map((item, idx) => {
+            total += (item.price * item.qty);
+            return `<div class="flex items-center gap-4 p-3 rounded-xl border hover:shadow-md transition-all" style="background-color: var(--primary-bg); border-color: #e5e6e7;">
+                <img src="${item.img}" class="w-14 h-14 rounded-lg object-cover">
+                <div class="flex-1">
+                    <p class="text-[10px] font-bold uppercase" style="color: var(--dark-text);">${item.name}</p>
+                    <p class="text-[8px]" style="color: #6b7280;">${item.size}</p>
+                </div>
+                <div class="flex items-center gap-3 border rounded-lg px-2 py-1" style="background-color: var(--white); border-color: #d1d5db;">
+                    <button onclick="changeQty(${idx}, -1)" style="color: #ef4444;" class="font-bold hover:scale-110 transition-all">-</button>
+                    <span class="text-[10px] font-bold">${item.qty}</span>
+                    <button onclick="changeQty(${idx}, 1)" style="color: #10b981;" class="font-bold hover:scale-110 transition-all">+</button>
+                </div>
+            </div>`;
+        }).join('');
+        
+        localStorage.setItem('mainfy_cart', JSON.stringify(cart));
+        
+        const final = total * (1 - activeDiscount);
+        document.getElementById('cart-total-final').innerText = `Rp ${final.toLocaleString('id-ID')}`;
+        document.getElementById('cart-count').innerText = cart.length;
+    }
+
+    function changeQty(idx, delta) {
+        cart[idx].qty += delta;
+        if(cart[idx].qty <= 0) cart.splice(idx, 1);
+        updateCart();
+    }
+
+    function applyPromo(type) {
+        const inputId = (type === 'direct' ? 'dir-promo' : 'cart-promo');
+        const code = document.getElementById(inputId).value.toUpperCase();
+        if(promos[code]) {
+            activeDiscount = promos[code];
+            alert("DISKON AKTIF: " + (activeDiscount * 100) + "%");
+            if(type === 'direct') {
+                const total = selectedProd.price * (1 - activeDiscount);
+                document.getElementById('dir-total-display').innerText = "Rp " + total.toLocaleString('id-ID');
+            } else { 
+                updateCart(); 
+            }
+        } else { 
+            alert("KODE EXPIRED/SALAH"); 
+            activeDiscount = 0; 
+            updateCart(); 
+        }
+    }
+
+    function openDirectOrder() {
+        activeDiscount = 0; 
+        document.getElementById('dir-total-display').innerText = "Rp " + selectedProd.price.toLocaleString('id-ID');
+        document.getElementById('modal-direct').classList.remove('hidden');
+    }
+
+    function sendDirectWA() {
+        const n = document.getElementById('dir-name').value;
+        const a = document.getElementById('dir-addr').value;
+        if(!n || !a) return alert("Isi data!");
+        const final = selectedProd.price * (1 - activeDiscount);
+        const msg = `*INSTANT ORDER*\nBarang: ${selectedProd.name}\nSize: ${selSize}\nTotal: Rp ${final.toLocaleString('id-ID')}\n\nPenerima: ${n}\nAlamat: ${a}`;
+        window.open(`https://wa.me/62881011909323?text=${encodeURIComponent(msg)}`);
+    }
+
+    function sendCartWA() {
+        const n = document.getElementById('cart-buyer-name').value;
+        const a = document.getElementById('cart-buyer-address').value;
+        if(!n || !a || cart.length === 0) return alert("Data belum lengkap!");
+        let list = "*PESANAN KERANJANG*\n";
+        cart.forEach(i => list += `- ${i.name} (${i.size}) x${i.qty}\n`);
+        const msg = `${list}\n*Total:* ${document.getElementById('cart-total-final').innerText}\n\nPenerima: ${n}\nAlamat: ${a}`;
+        window.open(`https://wa.me/62881011909323?text=${encodeURIComponent(msg)}`);
+    }
+
+    function selectSize(btn) { 
+        btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active'); 
+        selSize = btn.innerText;
+    }
+
+    function changeTab(t) {
+        document.getElementById('view-home').classList.toggle('hidden', t !== 'home');
+        document.getElementById('view-toko').classList.toggle('hidden', t !== 'toko');
+        document.querySelectorAll('nav button, div button').forEach(el => {
+            if(el.id && el.id.startsWith('nav-')) el.style.color = '#9ca3af';
+            el.classList.remove('active-tab');
+        });
+        const active = document.getElementById('nav-'+t);
+        active.classList.add('active-tab');
+        active.style.color = 'var(--primary-blue)';
+    }
+
+    function toggleSearch() { document.getElementById('search-bar').classList.toggle('hidden'); }
+    function openCart() { document.getElementById('cart-sidebar').classList.remove('translate-x-full'); }
+    function closeCart() { document.getElementById('cart-sidebar').classList.add('translate-x-full'); }
+    function closeDetail() { document.getElementById('modal-detail').classList.add('hidden'); }
+    function closeDirect() { document.getElementById('modal-direct').classList.add('hidden'); }
+
+    render();
+</script>
+
+</body>
+</html>
